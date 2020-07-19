@@ -1,15 +1,24 @@
-class App extends React.Component {
+class App extends React.Component{
+
   state = {
-    counter: 0
+    text: "",
   }
-  render() {
-    return (
+
+  handleOnclick = () => {
+    const letter = "a";
+    this.setState({
+      text: this.state.text + letter,
+    })
+  }
+
+  render(){
+    return(
       <div>
-        <h1>Hello!</h1>
+        <button onClick={this.handleOnclick}>dodajemy A</button>
+        <h1>{this.state.text}</h1>
       </div>
-    );
+    )
   }
 }
 
-
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App/>, document.getElementById("root"))
