@@ -1,43 +1,37 @@
-//Funkcja strzałkowa a deklarowanie metody. Bind
-//setState - przekazanie do metody obiektu i funkcji
-//Definiowanie state w konstruktorze
+// Nowy komponent wyświetlenie cyfr
+// losowanie liczby 
+// Wyświetlenie nazwy przycisku z obiektu props, ze zmiennej bezpośrednio lub z obiektu state.
+
 
 class App extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     text: ""
-  //   }
-  //   this.handleClick = this.handleClick.bind(this)
-  // }
 
   state = {
-    text: ""
+    text: "",
+    btn: 'uruchom'
   }
 
   handleClick = () => {
-    // this.state.text += "a";
-    // console.log(this.state.text);
-    // console.log(this);
-    const letter = "a"
-
-    // this.setState({
-    //   text: this.state.text + letter
-    // })
-
-    this.setState(() => ({
-      text: this.state.text + letter
+    const number = Math.floor(Math.random() * 10)
+    this.setState({
+      text: this.state.text + number
     })
-    )
   }
+
   render() {
+    const btnName = "stwórz liczbę"
     return (
       <React.Fragment>
-        <button onClick={this.handleClick}>Dodaj "A"</button>
-        <h1>{this.state.text}</h1>
+        <button onClick={this.handleClick}>{this.state.btn}</button>
+        <PanelResult text={this.state.text} />
       </React.Fragment>
     )
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("root"))
+const PanelResult = (props) => {
+  return (
+    <h1>{props.text}</h1>
+  )
+}
+
+ReactDOM.render(<App btnTitle="dodaj cyfrę" />, document.getElementById("root"))
