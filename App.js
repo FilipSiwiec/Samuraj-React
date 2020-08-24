@@ -1,37 +1,25 @@
-// Nowy komponent wyświetlenie cyfr
-// losowanie liczby 
-// Wyświetlenie nazwy przycisku z obiektu props, ze zmiennej bezpośrednio lub z obiektu state.
+const header = <h1 className="title">Witaj na stronie!</h1>
 
+const classBig = "big";
 
-class App extends React.Component {
+const handleClick = () => alert("klik!")
+const main = (
+  <div>
+    <h1 person="osoby" onClick={handleClick} className="red">Pierwszy artykuł</h1>
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae iste similique itaque a sequi provident corporis fuga, neque libero dolore quidem iure aliquam mollitia, velit pariatur quos sint iusto culpa?</p>
+  </div>
+)
 
-  state = {
-    text: "",
-    btn: 'uruchom'
-  }
+const text = "stopkaaa";
+const largeTxt = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore temporibus quasi repudiandae, quia beatae, quas et nulla, soluta reprehenderit consequuntur voluptatum a delectus fuga? Minus, unde? Iusto fugit non quisquam."
+const footer = (
+  <footer>
+    {largeTxt}
+    <p className={classBig}>{text}</p>
 
-  handleClick = () => {
-    const number = Math.floor(Math.random() * 10)
-    this.setState({
-      text: this.state.text + number
-    })
-  }
+  </footer>
+)
 
-  render() {
-    const btnName = "stwórz liczbę"
-    return (
-      <React.Fragment>
-        <button onClick={this.handleClick}>{this.state.btn}</button>
-        <PanelResult text={this.state.text} />
-      </React.Fragment>
-    )
-  }
-}
+const app = [header, main, footer]
 
-const PanelResult = (props) => {
-  return (
-    <h1>{props.text}</h1>
-  )
-}
-
-ReactDOM.render(<App btnTitle="dodaj cyfrę" />, document.getElementById("root"))
+ReactDOM.render(app, document.getElementById('root'))
