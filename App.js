@@ -1,26 +1,30 @@
 class App extends React.Component {
 
   state = {
-    text: "",
-    number: "jakis text"
+    text: ""
   }
 
-  handleClick = () => {
-    const letter = "a";
+  handle = () => {
+    const numbers = Math.floor(Math.random() * 10);
     this.setState({
-      text: this.state.text + letter
+      text: this.state.text + numbers
     })
   }
 
   render() {
     return (
       <div>
-        <button onClick={this.handleClick}>Klinknij mnie</button>
-        <h1>{this.state.text}</h1>
-    <h2>{this.state.number}</h2>
+        <button onClick={this.handle}>{this.props.btn}</button>
+        <Result numerek={this.state.text}/>
       </div>
     )
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const Result = (props) => {
+  return (
+    <h1>{props.numerek}</h1>
+  )
+}
+
+ReactDOM.render(<App btn="zmien cyferke" />, document.getElementById("root"))
