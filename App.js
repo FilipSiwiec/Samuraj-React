@@ -1,30 +1,30 @@
 class App extends React.Component {
 
   state = {
-    text: ""
+    value: ""
+  }
+
+  change = (e) => {
+    this.setState({
+      value: e.target.value
+    })
   }
 
   handle = () => {
-    const numbers = Math.floor(Math.random() * 10);
     this.setState({
-      text: this.state.text + numbers
+      value: ""
     })
   }
 
   render() {
     return (
       <div>
-        <button onClick={this.handle}>{this.props.btn}</button>
-        <Result numerek={this.state.text}/>
+        <input value={this.state.value} onChange={this.change} placeholder="wpisz text..." type="text" />
+        <button onClick={this.handle} >Reset</button>
+        <h1>{this.state.value.toUpperCase()}</h1>
       </div>
     )
   }
 }
 
-const Result = (props) => {
-  return (
-    <h1>{props.numerek}</h1>
-  )
-}
-
-ReactDOM.render(<App btn="zmien cyferke" />, document.getElementById("root"))
+ReactDOM.render(<App />, document.getElementById("root"));
