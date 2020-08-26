@@ -1,30 +1,28 @@
-class App extends React.Component {
+class Message extends React.Component {
 
-  state = {
-    value: ""
+  constructor(props) {
+    super(props);
+    this.state = {
+      change: false,
+    }
   }
 
-  change = (e) => {
+  handleClick = () => {
     this.setState({
-      value: e.target.value
-    })
-  }
-
-  handle = () => {
-    this.setState({
-      value: ""
+      change: !this.state.change,
     })
   }
 
   render() {
+    const text = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis beatae optio, numquam tenetur excepturi animi illo mollitia repudiandae alias, enim voluptatibus architecto et voluptas cumque dignissimos, soluta consequuntur neque sed."
     return (
       <div>
-        <input value={this.state.value} onChange={this.change} placeholder="wpisz text..." type="text" />
-        <button onClick={this.handle} >Reset</button>
-        <h1>{this.state.value.toUpperCase()}</h1>
+        <button onClick={this.handleClick}>{this.state.change ? "ukryj" : "pokaz"}</button>
+        {/* {this.state.change && <p>{text}</p>} */}
+        {this.state.change ? <p>{text}</p> : null}
       </div>
     )
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<Message />, document.getElementById("root"))
