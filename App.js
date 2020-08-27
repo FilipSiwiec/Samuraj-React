@@ -1,28 +1,44 @@
-class Message extends React.Component {
+class Counter extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      change: false,
+    state = {
+        count: 0,
+        result: this.props.value
     }
-  }
 
-  handleClick = () => {
-    this.setState({
-      change: !this.state.change,
-    })
-  }
+    handleClick = (type, number) => {
+        if (type === "substraction") {
+            this.setState(prevState => ({
+                count: prevState.count + 1,
+                result: prevState.result - number
+            }))
+        }
+        else if(type === "reset"){
+            this.setState(prevState => ({
+                count: prevState.count + 1,
+                result: 0
+            }))
+        }
+        else if(type === "addition"){
+            this.setState(prevState => ({
+                count: prevState.count +1,
+                result: prevState.result + number
+            }))
+        }
+    }
 
-  render() {
-    const text = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis beatae optio, numquam tenetur excepturi animi illo mollitia repudiandae alias, enim voluptatibus architecto et voluptas cumque dignissimos, soluta consequuntur neque sed."
-    return (
-      <div>
-        <button onClick={this.handleClick}>{this.state.change ? "ukryj" : "pokaz"}</button>
-        {/* {this.state.change && <p>{text}</p>} */}
-        {this.state.change ? <p>{text}</p> : null}
-      </div>
-    )
-  }
+    render() {
+        return (
+            <div>
+                <button onClick={this.handleClick.bind(this, "substraction", 10)}>-10</button>
+                <button onClick={() => this.handleClick("substraction", 1)}>-1</button>
+                <button onClick={this.handleClick.bind(this, "reset")}>reset</button>
+                <button onClick={this.handleClick.bind(this, "addition", 1)}>+1</button>
+                <button onClick={this.handleClick.bind(this, "addition", 10)}>+10</button>
+                <h1>Ilośc klikniec to: {this.state.count}</h1>
+                <h1>Twoj wynik to: {this.state.result}</h1>
+            </div>
+        )
+    }
 }
 
-ReactDOM.render(<Message />, document.getElementById("root"))
+ReactDOM.render(<Counter value="34"/>, document.getElementById("root"))
