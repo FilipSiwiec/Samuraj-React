@@ -58,9 +58,10 @@ class Counter extends React.Component {
                     name="+10"
                     click={this.handleClick}
                 />
-                <h1>Ilosc kloikniec: {this.state.count}</h1>
-                <h1>Twoj wynik to: {this.state.result}</h1>
-
+                <Result
+                    count={this.state.count}
+                    result={this.state.result}
+                />
             </div>
         )
     }
@@ -73,4 +74,13 @@ const Guziczek = (props) => {
     )
 }
 
-ReactDOM.render(<Counter result="37"/>, document.getElementById("root"))
+const Result = (props) => {
+    return (
+        <div>
+            <h1>Ilosc kloikniec: {props.count} {props.count > 11 ? <span>  Przeiazenie procesora</span> : null}</h1>
+            <h1>Twoj wynik to: {props.result}</h1>
+        </div>
+    )
+}
+
+ReactDOM.render(<Counter result="37" />, document.getElementById("root"))
