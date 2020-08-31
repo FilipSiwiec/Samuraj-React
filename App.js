@@ -1,86 +1,44 @@
-class Counter extends React.Component {
+const Positive = () => {
+    return <p>Zapraszamy na film!</p>
+}
+
+const Negative = () => {
+    return <p>Nie ukonczyles 18 lat</p>
+}
+
+class CheckAgeMovie extends React.Component {
 
     state = {
-        count: 0,
-        result: this.props.result
+        checkBox: false,
     }
 
-    handleClick = (type, number) => {
-        if (type === "substraction") {
-            this.setState(prevState => ({
-                count: prevState.count + 1,
-                result: prevState.result - number
-            }))
+    checkMessage = () => {
+        if (this.state.checkBox){
+            return <Positive/>
         }
-        else if (type === "reset") {
-            this.setState(prevState => ({
-                count: prevState.count + 1,
-                result: 0
-            }))
+
+        else{
+            return <Negative/>
         }
-        else if (type === "addition") {
-            this.setState(prevState => ({
-                count: prevState.count + 1,
-                result: prevState.result + number
-            }))
-        }
+    }
+
+    changeBul = () => {
+        this.setState({
+            checkBox: !this.state.checkBox
+        })
     }
 
     render() {
+        console.log(this.state.checkBox)
         return (
             <div>
-                <Guziczek
-                    type="substraction"
-                    number="10"
-                    name="-10"
-                    click={this.handleClick}
-                />
-                <Guziczek
-                    type="substraction"
-                    number="1"
-                    name="-1"
-                    click={this.handleClick}
-                />
-                <Guziczek
-                    type="reset"
-                    name="reset"
-                    click={this.handleClick}
-                />
-                <Guziczek
-                    type="addition"
-                    number="1"
-                    name="+1"
-                    click={this.handleClick}
-                />
-                <Guziczek
-                    type="addition"
-                    number="10"
-                    name="+10"
-                    click={this.handleClick}
-                />
-                <Result
-                    count={this.state.count}
-                    result={this.state.result}
-                />
+                <h1>Horror roku w kinach!</h1>
+                <input type="checkbox" onChange={this.changeBul} />
+                <label htmlFor="age">Czy masz ukonczone 18 lat</label>
+                {this.checkMessage()}
             </div>
         )
     }
 }
 
-const Guziczek = (props) => {
-    const number = parseInt(props.number)
-    return (
-        <button onClick={() => props.click(props.type, number)}>{props.name}</button>
-    )
-}
-
-const Result = (props) => {
-    return (
-        <div>
-            <h1>Ilosc kloikniec: {props.count} {props.count > 11 ? <span>  Przeiazenie procesora</span> : null}</h1>
-            <h1>Twoj wynik to: {props.result}</h1>
-        </div>
-    )
-}
-
-ReactDOM.render(<Counter result="37" />, document.getElementById("root"))
+ReactDOM.render(<CheckAgeMovie />, document.getElementById("root"));
