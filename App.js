@@ -1,44 +1,53 @@
-const Positive = () => {
-    return <p>Zapraszamy na film!</p>
+const PositiveMessage = () => <p>Możesz obejrzeć film. Zapraszamy!</p>;
+const NegativeMessage = () => <p>Nie możesz obejrzeć tego filmu jeśli masz mniej niż 16 lat!</p>;
+
+class TicketShop extends React.Component {
+
+  state = {
+    isConfirmed: false,
+    isFormSubmitted: false
+  }
+
+  handleCheckboxChange = () => {
+    this.setState({
+      isConfirmed: !this.state.isConfirmed,
+      isFormSubmitted: false,
+    })
+  }
+
+  handleFormSubmit = (e) => {
+    e.preventDefault()
+    if (!this.state.isFormSubmitted) {
+      this.setState({
+        isFormSubmitted: true
+      })
+    }
+  }
+
+  displayMessage = () => {
+    if (this.state.isFormSubmitted) {
+      if (this.state.isConfirmed) {
+        return <PositiveMessage />
+      } else {
+        return <NegativeMessage />
+      }
+    } else { return null }
+  }
+  render() {
+    // console.log(this.state.isConfirmed);
+    return (
+      <>
+        <h1>Kup bilet na horror roku!</h1>
+        <form onSubmit={this.handleFormSubmit}>
+          <input type="checkbox" id="age" onChange={this.handleCheckboxChange} checked={this.state.isConfirmed} />
+          <label htmlFor="age">Mam co najmniej 16 lata</label>
+          <br />
+          <button type="submit">Kup bilet</button>
+        </form>
+        {this.displayMessage()}
+      </>
+    )
+  }
 }
 
-const Negative = () => {
-    return <p>Nie ukonczyles 18 lat</p>
-}
-
-class CheckAgeMovie extends React.Component {
-
-    state = {
-        checkBox: false,
-    }
-
-    checkMessage = () => {
-        if (this.state.checkBox){
-            return <Positive/>
-        }
-
-        else{
-            return <Negative/>
-        }
-    }
-
-    changeBul = () => {
-        this.setState({
-            checkBox: !this.state.checkBox
-        })
-    }
-
-    render() {
-        console.log(this.state.checkBox)
-        return (
-            <div>
-                <h1>Horror roku w kinach!</h1>
-                <input type="checkbox" onChange={this.changeBul} />
-                <label htmlFor="age">Czy masz ukonczone 18 lat</label>
-                {this.checkMessage()}
-            </div>
-        )
-    }
-}
-
-ReactDOM.render(<CheckAgeMovie />, document.getElementById("root"));
+ReactDOM.render(<TicketShop />, document.getElementById('root'))
