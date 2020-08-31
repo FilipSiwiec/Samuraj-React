@@ -1,53 +1,30 @@
-const PositiveMessage = () => <p>Możesz obejrzeć film. Zapraszamy!</p>;
-const NegativeMessage = () => <p>Nie możesz obejrzeć tego filmu jeśli masz mniej niż 16 lat!</p>;
-
-class TicketShop extends React.Component {
-
-  state = {
-    isConfirmed: false,
-    isFormSubmitted: false
-  }
-
-  handleCheckboxChange = () => {
-    this.setState({
-      isConfirmed: !this.state.isConfirmed,
-      isFormSubmitted: false,
-    })
-  }
-
-  handleFormSubmit = (e) => {
-    e.preventDefault()
-    if (!this.state.isFormSubmitted) {
+class App extends React.Component {
+    state = {
+      availableProducts: 7,
+      shoppingCart: 1,
+    }
+  
+    handleRemoveFromCart = () => {
       this.setState({
-        isFormSubmitted: true
+        shoppingCart: this.state.shoppingCart - 1,
       })
     }
+  
+    handleAddToCart = () => {
+      this.setState({
+        shoppingCart: this.state.shoppingCart + 1,
+      })
+    }
+  
+    render() {
+      return (
+        <div>
+          <button disabled={this.state.shoppingCart ? false : true} onClick={this.handleRemoveFromCart}>-</button>
+          <span> {this.state.shoppingCart} </span>
+          <button disabled={this.state.shoppingCart === this.state.availableProducts ? true : false} onClick={this.handleAddToCart}>+</button>
+        </div>
+      )
+    }
   }
-
-  displayMessage = () => {
-    if (this.state.isFormSubmitted) {
-      if (this.state.isConfirmed) {
-        return <PositiveMessage />
-      } else {
-        return <NegativeMessage />
-      }
-    } else { return null }
-  }
-  render() {
-    // console.log(this.state.isConfirmed);
-    return (
-      <>
-        <h1>Kup bilet na horror roku!</h1>
-        <form onSubmit={this.handleFormSubmit}>
-          <input type="checkbox" id="age" onChange={this.handleCheckboxChange} checked={this.state.isConfirmed} />
-          <label htmlFor="age">Mam co najmniej 16 lata</label>
-          <br />
-          <button type="submit">Kup bilet</button>
-        </form>
-        {this.displayMessage()}
-      </>
-    )
-  }
-}
-
-ReactDOM.render(<TicketShop />, document.getElementById('root'))
+  
+  ReactDOM.render(<App />, document.getElementById('root'))
