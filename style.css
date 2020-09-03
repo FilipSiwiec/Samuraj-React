@@ -22,3 +22,11 @@ li:nth-child(odd) {
 .disabled {
 color: gray;
 }
+
+.enabled {
+  font-weight: bold;
+}
+
+.disabled{
+  color: gray;
+}

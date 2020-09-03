@@ -1,6 +1,6 @@
 const Item = (props) => {
 
     return (
-        <li>{props.name}</li>
+        <li onClick={() => props.change(props.id)} className={props.active ? "enabled" : "disabled"}>{props.name}</li>
     )
 }
