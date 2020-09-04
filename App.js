@@ -1,34 +1,67 @@
 class App extends React.Component {
-    state = {
-        items: [
-            { id: 1, name: "herbata", active: true },
-            { id: 2, name: "ziemniaki", active: false },
-            { id: 3, name: "kasza", active: false },
-            { id: 4, name: "zupa wodna", active: false },
-            { id: 5, name: "wrzątek", active: false },
-            { id: 6, name: "chleb", active: true },
-        ],
+    state = { 
+        city: "London",
+        text: "",
+        check: false,
+        select: 2
+     }
 
-    }
+     cityChange = (e) => {
+         this.setState({
+             city: e.target.value
+         })
+     }
 
-   change = (id) => {
-        console.log(id)
-        const items = this.state.items.map(item => {
-            if(id === item.id){
-                item.active = !item.active
-            }
-            return item
-        })
+     textChange = (e) => {
         this.setState({
-            items: items
+            text: e.target.value
         })
     }
-    render() {
-        return (
-            <>
-                <Header items={this.state.items} />
-                <ListItems items={this.state.items} change={this.change} />
-            </>
-        );
+
+    boxChange = (e) => {
+        this.setState({
+            check: e.target.checked
+        })
+    }
+
+    selectChange = (e) => {
+        this.setState({
+            select: e.target.value
+        })
+    }
+
+    render() { 
+        return ( 
+        <form>
+            <label>
+                Podaj miasto:
+                <input value={this.state.city} onChange={this.cityChange} type="text"/>
+            </label>
+            <br/>
+            <label>
+                Napisz cos o tym miescie:
+                <textarea value={this.state.text} onChange={this.textChange}></textarea>
+            </label>
+            <br/>
+            <label>
+                Czy lubisz to miasto?
+                <input type="checkbox" onChange={this.boxChange} checked={this.state.check}/>
+            </label>
+            <br/>
+            <label>
+                Ile razy byles w tym miescie?
+                <select value={this.state.select} onChange={this.selectChange}> 
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="many">wiele</option>
+                </select>
+            </label>
+        </form>
+         );
     }
 }
+ 
+ReactDOM.render(<App/>, document.getElementById("root"))
