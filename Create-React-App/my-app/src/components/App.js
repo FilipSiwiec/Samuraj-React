@@ -1,43 +1,54 @@
 import React, { Component } from 'react';
-import "./App.css"
-import SwitchButton from "./SwitchButton"
+
+const data = [
+  { id: 1, title: "Wiadomosc nr 1", body: "Zawartosc wiadomosci nr 1..." },
+  { id: 2, title: "Wiadomosc nr 2", body: "Zawartosc wiadomosci nr 2..." },
+]
+
+setInterval(() => {
+  const index = data.length + 1;
+  data.push({
+    id: index,
+    title: `Wiadomosc nr ${index}`,
+    body: `Zawartosc wiadomosci nr ${index}...`
+  })
+  console.log(data)
+}, 1000)
 
 class App extends Component {
+
   state = {
-    time: 0,
-    active: false
+    comments: [...data]
   }
 
-  addnumbers = () => {
+  getData = () => {
     this.setState({
-      time: this.state.time + 1
+      comments: [...data]
     })
   }
 
-  handleClick = () => {
-    if (this.state.active) {
-      clearInterval(this.number)
-    }
-    else {
-      this.number = setInterval(() => this.addnumbers(), 1000)
-    }
-    this.setState({
-      active: !this.state.active
-    })
+  componentDidMount(){
+    this.idI =  setInterval(this.getData, 5000)
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.idI)
   }
 
   render() {
+    const comments = this.state.comments.map(comment => (
+      <div key={comment.id}>
+        <h4>{comment.title}</h4>
+        <div>{comment.body}</div>
+      </div>
+
+    ));
     return (
       <div>
-        {this.state.time}
-        <br />
-        <SwitchButton
-          click={this.handleClick}
-          active={this.state.active}
-        />
+        {comments.reverse()}
       </div>
     );
   }
 }
 
-export default App
+export default App;
