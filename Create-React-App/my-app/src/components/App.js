@@ -1,51 +1,47 @@
 import React, { Component } from 'react';
-
-const data = [
-  { id: 1, title: "Wiadomosc nr 1", body: "Zawartosc wiadomosci nr 1..." },
-  { id: 2, title: "Wiadomosc nr 2", body: "Zawartosc wiadomosci nr 2..." },
-]
-
-setInterval(() => {
-  const index = data.length + 1;
-  data.push({
-    id: index,
-    title: `Wiadomosc nr ${index}`,
-    body: `Zawartosc wiadomosci nr ${index}...`
-  })
-  console.log(data)
-}, 1000)
+import Words from "./Words"
 
 class App extends Component {
 
   state = {
-    comments: [...data]
+    words: [],
+    isLoaded: false
   }
 
-  getData = () => {
-    this.setState({
-      comments: [...data]
-    })
+  componentDidMount() {
+    setInterval(this.fetchData, 3000)
+    // fetch("data/words.json")
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     this.setState({
+    //       words: data.words,
+    //       isLoaded: true
+    //     })
+    //   })
   }
 
-  componentDidMount(){
-    this.idI =  setInterval(this.getData, 5000)
+  fetchData = () => {
+    fetch("data/words.json")
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          words: data.words,
+          isLoaded: true
+        })
+      })
   }
 
-  componentWillUnmount(){
-    clearInterval(this.idI)
-  }
+
 
   render() {
-    const comments = this.state.comments.map(comment => (
-      <div key={comment.id}>
-        <h4>{comment.title}</h4>
-        <div>{comment.body}</div>
-      </div>
-
-    ));
+    const words = this.state.words.map(word => (
+      <Words key={word.id}
+        english={word.en}
+        polish={word.pl} />
+    ))
     return (
       <div>
-        {comments.reverse()}
+        {this.state.isLoaded ? words : "wczytujemy dane"}
       </div>
     );
   }
